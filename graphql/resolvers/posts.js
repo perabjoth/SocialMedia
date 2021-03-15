@@ -47,11 +47,10 @@ module.exports = {
 
             return post;
         },
-        async deletePost(_, {postId}, context) {
+        async deletePost(_, { postId }, context) {
             const user = checkAuth(context);
             try {
                 const post = await Post.findById(postId);
-
                 if (user.username === post.username) {
                     await post.delete();
                     return 'Post deleted successfully';
@@ -65,6 +64,7 @@ module.exports = {
         async likePost(_,{postId}, context) {
              const {username} = checkAuth(context);
              const post = await Post.findById(postId);
+
              if(post){
                  if (post.likes.find(like => like.username === username)){
                      post.likes = post.likes.filter(like => like.username !== username);
